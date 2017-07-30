@@ -1,0 +1,93 @@
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.1.0'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    compileSdkVersion 22
+    buildToolsVersion '21.1.2'
+    defaultConfig {
+        applicationId "com.jatin.producthunt"
+        minSdkVersion 21
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "CLIENT_ID", "\"" + getClientId() + "\"")
+            buildConfigField("String", "CLIENT_SECRET", "\"" + getClientSecret() + "\"")
+            buildConfigField("String", "GRANT_TYPE", "\"" + getGrantType() + "\"")
+        }
+
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "CLIENT_ID", "\"" + getClientId() + "\"")
+            buildConfigField("String", "CLIENT_SECRET", "\"" + getClientSecret() + "\"")
+            buildConfigField("String", "GRANT_TYPE", "\"" + getGrantType() + "\"")
+
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+}
+
+def getClientId(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['CLIENT_ID']
+}
+
+def getClientSecret(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['CLIENT_SECRET']
+}
+
+def getGrantType(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['GRANT_TYPE']
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.android.support:support-v4:22.1.1'
+    compile 'com.pnikosis:materialish-progress:1.5'
+    compile 'com.android.support:cardview-v7:22.1.1'
+    compile 'com.android.support:recyclerview-v7:22.1.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.johnkil.android-robototextview:robototextview:2.4.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'io.reactivex:rxjava:1.0.10'
+    compile 'io.reactivex:rxandroid:0.24.0'
+    compile 'com.wdullaer:materialdatetimepicker:1.3.0'
+    compile 'com.nispok:snackbar:2.10.8'
+}
