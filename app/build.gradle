@@ -23,7 +23,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     compileSdkVersion 22
-    buildToolsVersion '21.1.2'
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.jatin.producthunt"
         minSdkVersion 21
